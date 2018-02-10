@@ -15,14 +15,14 @@ The following **required** functionality is completed:
 - [X] Data model classes
 - [X] User can view last 20 tweets from their home timeline with the user profile picture, username, tweet text, and timestamp.
 - [X] User can pull to refresh.
-- [ ] User can tap the retweet and favorite buttons in a tweet cell to retweet and/or favorite a tweet.
-- [ ] Using AutoLayout, the Tweet cell should adjust it's layout for iPhone 7, Plus and SE device sizes as well as accommodate device rotation.
+- [X] User can tap the retweet and favorite buttons in a tweet cell to retweet and/or favorite a tweet.
+- [X] Using AutoLayout, the Tweet cell should adjust it's layout for iPhone 7, Plus and SE device sizes as well as accommodate device rotation.
 
 The following **stretch** features are implemented:
 
 - [X] The current signed in user will be persisted across restarts
-- [ ] Each tweet should display the relative timestamp for each tweet "8m", "7h"
-- [ ] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
+- [X] Each tweet should display the relative timestamp for each tweet "8m", "7h"
+- [X] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
 - [ ] Links in tweets are clickable.
 - [ ] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
 

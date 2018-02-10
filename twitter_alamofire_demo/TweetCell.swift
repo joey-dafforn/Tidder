@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class TweetCell: UITableViewCell {
     
@@ -44,36 +45,9 @@ class TweetCell: UITableViewCell {
             }
             retweetImageThing.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(retweetPost)))
             favoriteImageThing.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(favoritePost)))
-            let tweetPictureURL = URL(string: tweet.tweetImage)!
-            let session = URLSession(configuration: .default)
-            // Define a download task. The download task will download the contents of the URL as a Data object and then you can do what you wish with that data.
-            let downloadPicTask = session.dataTask(with: tweetPictureURL) { (data, response, error) in
-                // The download has finished.
-                if let e = error {
-                    print("Error downloading picture: \(e.localizedDescription)")
-                } else {
-                    // No errors found.
-                    // It would be weird if we didn't have a response, so check for that too.
-                    if (response as? HTTPURLResponse) != nil {
-                        //print("Downloaded picture with response code \(res.statusCode)")
-                        if let imageData = data {
-                            // Finally convert that Data into an image and do what you wish with it.
-                            let image = UIImage(data: imageData)
-                            // Do something with your image.
-                            OperationQueue.main.addOperation {
-                                self.tweetPictureImage.image = image
-                                self.tweetPictureImage.layer.cornerRadius = 16
-                                self.tweetPictureImage.clipsToBounds = true
-                            }
-                        } else {
-                            print("Couldn't get image: Image is nil")
-                        }
-                    } else {
-                        print("Couldn't get response code for some reason")
-                    }
-                }
-            }
-            downloadPicTask.resume()
+            tweetPictureImage.af_setImage(withURL: URL(string: tweet.tweetImage)!)
+            tweetPictureImage.layer.cornerRadius = 16
+            tweetPictureImage.clipsToBounds = true
         }
     }
     

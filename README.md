@@ -1,7 +1,7 @@
 
-# Project 5 - *Name of App Here*
+# Project 5 - *Tidder*
 
-**Name of your app** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
+**Tidder** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
 Time spent: **X** hours spent in total
 
@@ -9,18 +9,18 @@ Time spent: **X** hours spent in total
 
 The following **required** functionality is completed:
 
-- [ ] User sees app icon in home screen and styled launch screen
-- [ ] User can sign in using OAuth login flow
-- [ ] User can Logout
-- [ ] Data model classes
-- [ ] User can view last 20 tweets from their home timeline with the user profile picture, username, tweet text, and timestamp.
-- [ ] User can pull to refresh.
+- [X] User sees app icon in home screen and styled launch screen
+- [X] User can sign in using OAuth login flow
+- [X] User can Logout
+- [X] Data model classes
+- [X] User can view last 20 tweets from their home timeline with the user profile picture, username, tweet text, and timestamp.
+- [X] User can pull to refresh.
 - [ ] User can tap the retweet and favorite buttons in a tweet cell to retweet and/or favorite a tweet.
 - [ ] Using AutoLayout, the Tweet cell should adjust it's layout for iPhone 7, Plus and SE device sizes as well as accommodate device rotation.
 
 The following **stretch** features are implemented:
 
-- [ ] The current signed in user will be persisted across restarts
+- [X] The current signed in user will be persisted across restarts
 - [ ] Each tweet should display the relative timestamp for each tweet "8m", "7h"
 - [ ] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
 - [ ] Links in tweets are clickable.

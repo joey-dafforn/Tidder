@@ -28,6 +28,22 @@ class TweetCell: UITableViewCell {
             dateLabel.text = tweet.createdAtString
             retweetCountLabel.text = "\(String(tweet.retweetCount))"
             favoriteCountLabel.text = "\(String(describing: tweet.favoriteCount!))"
+            favoriteImageThing.isUserInteractionEnabled = true
+            retweetImageThing.isUserInteractionEnabled = true
+            if (tweet.favorited == true) {
+                favoriteImageThing.image = #imageLiteral(resourceName: "favor-icon-red")
+            }
+            else {
+                favoriteImageThing.image = #imageLiteral(resourceName: "favor-icon")
+            }
+            if (tweet.retweeted == true) {
+                retweetImageThing.image = #imageLiteral(resourceName: "retweet-icon-green")
+            }
+            else {
+                retweetImageThing.image = #imageLiteral(resourceName: "retweet-icon")
+            }
+            retweetImageThing.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(retweetPost)))
+            favoriteImageThing.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(favoritePost)))
             let tweetPictureURL = URL(string: tweet.tweetImage)!
             let session = URLSession(configuration: .default)
             // Define a download task. The download task will download the contents of the URL as a Data object and then you can do what you wish with that data.
@@ -38,7 +54,7 @@ class TweetCell: UITableViewCell {
                 } else {
                     // No errors found.
                     // It would be weird if we didn't have a response, so check for that too.
-                    if let res = response as? HTTPURLResponse {
+                    if (response as? HTTPURLResponse) != nil {
                         //print("Downloaded picture with response code \(res.statusCode)")
                         if let imageData = data {
                             // Finally convert that Data into an image and do what you wish with it.
@@ -57,22 +73,78 @@ class TweetCell: UITableViewCell {
                     }
                 }
             }
-            
             downloadPicTask.resume()
-            if (tweet.favorited == true) {
-                favoriteImageThing.image = #imageLiteral(resourceName: "favor-icon-red")
-            }
-            else {
-                favoriteImageThing.image = #imageLiteral(resourceName: "favor-icon")
-            }
-            if (tweet.retweeted == true) {
-                retweetImageThing.image = #imageLiteral(resourceName: "retweet-icon-green")
-            }
-            else {
-                retweetImageThing.image = #imageLiteral(resourceName: "retweet-icon")
-            }
         }
     }
+    
+    @objc func retweetPost() {
+        if tweet.retweeted {
+            retweetImageThing.isUserInteractionEnabled = false
+            APIManager.shared.unRetweet(tweet, completion: { (tweet, error) in
+                if let error = error {
+                    self.retweetImageThing.isUserInteractionEnabled = true
+                    print(error.localizedDescription)
+                } else {
+                    self.retweetImageThing.isUserInteractionEnabled = true
+                    //self.delegate?.did(post: tweet!)
+                }
+            })
+            retweetImageThing.image = #imageLiteral(resourceName: "retweet-icon")
+        } else {
+            retweetImageThing.isUserInteractionEnabled = false
+            APIManager.shared.retweet(tweet, completion: { (tweet, error) in
+                if let error = error {
+                    self.retweetImageThing.isUserInteractionEnabled = true
+                    print(error.localizedDescription)
+                } else {
+                    self.retweetImageThing.isUserInteractionEnabled = true
+                    //self.delegate?.did(post: tweet!)
+                }
+            })
+            retweetImageThing.image = #imageLiteral(resourceName: "retweet-icon-green")
+        }
+    }
+    
+    @objc func favoritePost() {
+        favoriteImageThing.isUserInteractionEnabled = false
+        if let favorited = tweet.favorited {
+            if favorited {
+                APIManager.shared.unFavorite(tweet, completion: { (tweet, error) in
+                    if let error = error {
+                        self.favoriteImageThing.isUserInteractionEnabled = true
+                        print(error.localizedDescription)
+                    } else {
+                        self.favoriteImageThing.isUserInteractionEnabled = true
+                        self.tweet = tweet
+                    }
+                })
+                favoriteImageThing.image = #imageLiteral(resourceName: "favor-icon")
+            } else {
+                APIManager.shared.favoriteATweet(tweet, completion: { (tweet, error) in
+                    if let error = error {
+                        self.favoriteImageThing.isUserInteractionEnabled = true
+                        print(error.localizedDescription)
+                    } else {
+                        self.favoriteImageThing.isUserInteractionEnabled = true
+                        self.tweet = tweet
+                    }
+                })
+                favoriteImageThing.image = #imageLiteral(resourceName: "favor-icon-red")
+            }
+        } else {
+            APIManager.shared.favoriteATweet(tweet, completion: { (tweet, error) in
+                if let error = error {
+                    self.favoriteImageThing.isUserInteractionEnabled = true
+                    print(error.localizedDescription)
+                } else {
+                    self.favoriteImageThing.isUserInteractionEnabled = true
+                    self.tweet = tweet
+                }
+            })
+            favoriteImageThing.image = #imageLiteral(resourceName: "favor-icon-red")
+        }
+    }
+
     
     override func awakeFromNib() {
         super.awakeFromNib()

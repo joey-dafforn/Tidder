@@ -17,7 +17,6 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.dataSource = self
         tableView.delegate = self
         refreshControl = UIRefreshControl()
@@ -48,15 +47,54 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+//    func favoriteAction(tapGesture: UITapGestureRecognizer) {
+//        let tapLocation = tapGesture.location(in: self.tableView)
+//        let indexPath = self.tableView.indexPathForRow(at: tapLocation)
+//        let cell = self.tableView.cellForRow(at: indexPath!) as! TweetCell
+//        if cell.tweet.favorited == true {
+//            cell.tweet.favorited = false
+//            cell.favoriteImageThing.image = #imageLiteral(resourceName: "favor-icon")
+//        }
+//        else {
+//            cell.tweet.favorited = true
+//            cell.favoriteImageThing.image = #imageLiteral(resourceName: "favor-icon-red")
+//            APIManager.shared.favoriteATweet(tweetId: String(cell.tweet.id), completion: { (asdf, error) in
+//                if error != nil {
+//                    print(error?.localizedDescription)
+//                }
+//                else {
+//                    print(asdf)
+//                }
+//            })
+//        }
+//    }
+    /////////////////
+//    func retweetAction(tapGesture: UITapGestureRecognizer) {
+//        let tapLocation = tapGesture.location(in: self.tableView)
+//        let indexPath = self.tableView.indexPathForRow(at: tapLocation)
+//        let cell = self.tableView.cellForRow(at: indexPath!) as! TweetCell
+//        if cell.tweet.retweeted == true {
+//            cell.tweet.retweeted = false
+//            cell.retweetImageThing.image = #imageLiteral(resourceName: "retweet-icon")
+//        }
+//        else {
+//            cell.tweet.retweeted = true
+//            cell.retweetImageThing.image = #imageLiteral(resourceName: "retweet-icon-green")
+//        }
+//    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tweets.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
-        
+//        let tapGestureFavorite = UITapGestureRecognizer(target: self, action: #selector(favoriteAction(tapGesture:)))
+//        let tapGestureRetweet = UITapGestureRecognizer(target: self, action: #selector(retweetAction(tapGesture:)))
         cell.tweet = tweets[indexPath.row]
-        
+//        cell.favoriteImageThing.isUserInteractionEnabled = true
+//        cell.favoriteImageThing.addGestureRecognizer(tapGestureRetweet)
+//        cell.favoriteImageThing.addGestureRecognizer(tapGestureFavorite) // Increment favorited when image is clicked
         return cell
     }
     

@@ -12,6 +12,7 @@ target 'twitter_alamofire_demo' do
   pod 'KeychainAccess'
   pod 'DateToolsSwift'
   pod 'AlamofireImage', '~> 3.3'
+  pod 'TTTAttributedLabel'
   
   target 'twitter_alamofire_demoTests' do
     inherit! :search_paths

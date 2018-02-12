@@ -14,7 +14,6 @@ import KeychainAccess
 
 class APIManager: SessionManager {
     
-    // MARK: TODO: Add App Keys
     static let consumerKey = "FQoIOEnFWxJVwGaSKvpQ4mrxv"
     static let consumerSecret = "rbfvuWjH2jFXz9KlxXTRjUflTmz3RrP3Ud29yyye6lYJ7iZPdN"
 
@@ -116,11 +115,10 @@ class APIManager: SessionManager {
         }
     }
     
-    // MARK: TODO: Favorite a Tweet
     func favoriteATweet(_ tweet: Tweet, completion: @escaping (Tweet?, Error?) -> ()) {
-        let urlString = "https://api.twitter.com/1.1/favorites/create.json"
+        let urlString = URL(string: "https://api.twitter.com/1.1/favorites/create.json")
         let parameters = ["id": tweet.id]
-        request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.queryString).validate().responseJSON { (response) in
+        request(urlString!, method: .post, parameters: parameters, encoding: URLEncoding.queryString).validate().responseJSON { (response) in
             if response.result.isSuccess,
                 let tweetDictionary = response.result.value as? [String: Any] {
                 let tweet = Tweet(dictionary: tweetDictionary)
@@ -131,11 +129,10 @@ class APIManager: SessionManager {
         }
     }
     
-    // MARK: TODO: Un-Favorite a Tweet
     func unFavorite(_ tweet: Tweet, completion: @escaping (Tweet?, Error?) -> ()) {
-        let urlString = "https://api.twitter.com/1.1/favorites/destroy.json"
+        let urlString = URL(string: "https://api.twitter.com/1.1/favorites/destroy.json")
         let parameters = ["id": tweet.id]
-        request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.queryString).validate().responseJSON { (response) in
+        request(urlString!, method: .post, parameters: parameters, encoding: URLEncoding.queryString).validate().responseJSON { (response) in
             if response.result.isSuccess,
                 let tweetDictionary = response.result.value as? [String: Any] {
                 let tweet = Tweet(dictionary: tweetDictionary)
@@ -146,10 +143,9 @@ class APIManager: SessionManager {
         }
     }
 
-    // MARK: TODO: Retweet
     func retweet(_ tweet: Tweet, completion: @escaping (Tweet?, Error?) -> ()) {
-        let urlString = "https://api.twitter.com/1.1/statuses/retweet/\(tweet.id).json"
-        request(urlString, method: .post, parameters: [:], encoding: URLEncoding.queryString).validate().responseJSON { (response) in
+        let urlString = URL(string: "https://api.twitter.com/1.1/statuses/retweet/\(tweet.id).json")
+        request(urlString!, method: .post, parameters: [:], encoding: URLEncoding.queryString).validate().responseJSON { (response) in
             if response.result.isSuccess,
                 let tweetDictionary = response.result.value as? [String: Any] {
                 let tweet = Tweet(dictionary: tweetDictionary)
@@ -161,8 +157,8 @@ class APIManager: SessionManager {
     }
     
     func unRetweet(_ tweet: Tweet, completion: @escaping (Tweet?, Error?) -> ()) {
-        let urlString = "https://api.twitter.com/1.1/statuses/unretweet/\(tweet.id).json"
-        request(urlString, method: .post, parameters: [:], encoding: URLEncoding.queryString).validate().responseJSON { (response) in
+        let urlString = URL(string: "https://api.twitter.com/1.1/statuses/unretweet/\(tweet.id).json")
+        request(urlString!, method: .post, parameters: [:], encoding: URLEncoding.queryString).validate().responseJSON { (response) in
             if response.result.isSuccess,
                 let tweetDictionary = response.result.value as? [String: Any] {
                 let tweet = Tweet(dictionary: tweetDictionary)
@@ -172,8 +168,6 @@ class APIManager: SessionManager {
             }
         }
     }
-    // MARK: TODO: Un-Retweet
-    
     // MARK: TODO: Compose Tweet
     
     // MARK: TODO: Get User Timeline

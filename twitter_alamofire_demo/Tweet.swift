@@ -21,6 +21,10 @@ class Tweet {
     var user: User // Contains name, screenname, etc. of tweet author
     var createdAtString: String // Display date
     var tweetImage: String
+//    var hashtags: [[String: Any]]
+//    var urls: [[String: Any]]
+//    var media: [[String: Any]]
+    //var entities: [String: Dictionary<String, Any>]
     // MARK: - Create initializer with dictionary
     init(dictionary: [String: Any]) {
         id = dictionary["id"] as! Int64
@@ -29,6 +33,10 @@ class Tweet {
         favorited = dictionary["favorited"] as? Bool
         retweetCount = dictionary["retweet_count"] as! Int
         retweeted = dictionary["retweeted"] as! Bool
+        //entities = dictionary["entities"] as! [String: Dictionary]
+        //hashtags = entities["hashtags"] as! [[String: Any]]
+        //media = entities["media"] as! [[String: Any]]
+        //urls = entities["urls"] as! [[String: Any]]
         let user = dictionary["user"] as! [String: Any]
         tweetImage = user["profile_image_url"] as! String
         self.user = User(dictionary: user)

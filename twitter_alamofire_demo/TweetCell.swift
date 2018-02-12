@@ -31,6 +31,12 @@ class TweetCell: UITableViewCell {
             favoriteCountLabel.text = "\(String(describing: tweet.favoriteCount!))"
             favoriteImageThing.isUserInteractionEnabled = true
             retweetImageThing.isUserInteractionEnabled = true
+//            for thing in tweet.entities {
+//                print(thing)
+//                for asdf in thing {
+//                    print(asdf)
+//                }
+//            }
             if (tweet.favorited == true) {
                 favoriteImageThing.image = #imageLiteral(resourceName: "favor-icon-red")
             }

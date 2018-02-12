@@ -67,6 +67,8 @@ class TweetCell: UITableViewCell, UITextViewDelegate {
                 }
             })
             tweet.retweeted = false
+            let count = tweet.retweetCount
+            tweet.retweetCount = count - 1
             retweetImageThing.image = #imageLiteral(resourceName: "retweet-icon")
         } else {
             retweetImageThing.isUserInteractionEnabled = false
@@ -80,6 +82,8 @@ class TweetCell: UITableViewCell, UITextViewDelegate {
                 }
             })
             tweet.retweeted = true
+            let count = tweet.retweetCount
+            tweet.retweetCount = count + 1
             retweetImageThing.image = #imageLiteral(resourceName: "retweet-icon-green")
         }
     }
@@ -98,6 +102,8 @@ class TweetCell: UITableViewCell, UITextViewDelegate {
                     }
                 })
                 tweet.favorited = false
+                let count1 = tweet.favoriteCount
+                tweet.favoriteCount = count1! - 1
                 favoriteImageThing.image = #imageLiteral(resourceName: "favor-icon")
             } else {
                 APIManager.shared.favoriteATweet(tweet, completion: { (tweet, error) in
@@ -110,6 +116,8 @@ class TweetCell: UITableViewCell, UITextViewDelegate {
                     }
                 })
                 tweet.favorited = true
+                let count1 = tweet.favoriteCount
+                tweet.favoriteCount = count1! + 1
                 favoriteImageThing.image = #imageLiteral(resourceName: "favor-icon-red")
             }
         } else {
@@ -123,6 +131,8 @@ class TweetCell: UITableViewCell, UITextViewDelegate {
                 }
             })
             tweet.favorited = true
+            let count1 = tweet.favoriteCount
+            tweet.favoriteCount = count1! + 1
             favoriteImageThing.image = #imageLiteral(resourceName: "favor-icon-red")
         }
     }

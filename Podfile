@@ -12,8 +12,11 @@ target 'twitter_alamofire_demo' do
   pod 'KeychainAccess'
   pod 'DateToolsSwift'
   pod 'AlamofireImage', '~> 3.3'
+  pod 'KILabel', '1.0.0'
+  pod 'ResponsiveLabel', '~> 1.0.11'
   pod 'TTTAttributedLabel'
   pod 'ActiveLabel'
+  pod 'UIScrollView-InfiniteScroll', '~> 1.0.0'
   
   target 'twitter_alamofire_demoTests' do
     inherit! :search_paths

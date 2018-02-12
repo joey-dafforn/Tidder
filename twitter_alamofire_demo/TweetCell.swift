@@ -8,8 +8,9 @@
 
 import UIKit
 import AlamofireImage
+import ActiveLabel
 
-class TweetCell: UITableViewCell {
+class TweetCell: UITableViewCell, UITextViewDelegate {
     
     @IBOutlet weak var tweetPictureImage: UIImageView!
     @IBOutlet weak var favoriteImageThing: UIImageView!
@@ -19,11 +20,12 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var twitterHandleLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var tweetTextLabel: UILabel!
+    @IBOutlet weak var tweetTextLabel: UITextView!
     
     var tweet: Tweet! {
         didSet {
             tweetTextLabel.text = tweet.text
+            tweetTextLabel.resolveHashTags()
             usernameLabel.text = tweet.user.name
             twitterHandleLabel.text = "@\(tweet.user.screenName)"
             dateLabel.text = tweet.createdAtString
@@ -31,12 +33,6 @@ class TweetCell: UITableViewCell {
             favoriteCountLabel.text = "\(String(describing: tweet.favoriteCount!))"
             favoriteImageThing.isUserInteractionEnabled = true
             retweetImageThing.isUserInteractionEnabled = true
-//            for thing in tweet.entities {
-//                print(thing)
-//                for asdf in thing {
-//                    print(asdf)
-//                }
-//            }
             if (tweet.favorited == true) {
                 favoriteImageThing.image = #imageLiteral(resourceName: "favor-icon-red")
             }
@@ -54,6 +50,7 @@ class TweetCell: UITableViewCell {
             tweetPictureImage.af_setImage(withURL: URL(string: tweet.tweetImage)!)
             tweetPictureImage.layer.cornerRadius = 16
             tweetPictureImage.clipsToBounds = true
+            
         }
     }
     

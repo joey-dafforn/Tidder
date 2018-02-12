@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import UIScrollView_InfiniteScroll
 
-class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UIScrollViewDelegate {
     
     var tweets: [Tweet] = []
+    var isMoreDataLoading = false
     
     @IBOutlet weak var tableView: UITableView!
     var refreshControl: UIRefreshControl!
@@ -24,7 +26,6 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.insertSubview(refreshControl, at: 0)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
-        
         APIManager.shared.getHomeTimeLine { (tweets, error) in
             if let tweets = tweets {
                 self.tweets = tweets
@@ -33,6 +34,27 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                 print("Error getting home timeline: " + error.localizedDescription)
             }
         }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
+                
+                isMoreDataLoading = true
+                
+                // Code to load more results
+                loadMoreData()
+            }
+        }
+    }
+    
+    func loadMoreData() {
+        print("hi")
     }
     
     @objc func didPullToRefresh(_ refreshControl: UIRefreshControl) {
@@ -47,54 +69,13 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-//    func favoriteAction(tapGesture: UITapGestureRecognizer) {
-//        let tapLocation = tapGesture.location(in: self.tableView)
-//        let indexPath = self.tableView.indexPathForRow(at: tapLocation)
-//        let cell = self.tableView.cellForRow(at: indexPath!) as! TweetCell
-//        if cell.tweet.favorited == true {
-//            cell.tweet.favorited = false
-//            cell.favoriteImageThing.image = #imageLiteral(resourceName: "favor-icon")
-//        }
-//        else {
-//            cell.tweet.favorited = true
-//            cell.favoriteImageThing.image = #imageLiteral(resourceName: "favor-icon-red")
-//            APIManager.shared.favoriteATweet(tweetId: String(cell.tweet.id), completion: { (asdf, error) in
-//                if error != nil {
-//                    print(error?.localizedDescription)
-//                }
-//                else {
-//                    print(asdf)
-//                }
-//            })
-//        }
-//    }
-    /////////////////
-//    func retweetAction(tapGesture: UITapGestureRecognizer) {
-//        let tapLocation = tapGesture.location(in: self.tableView)
-//        let indexPath = self.tableView.indexPathForRow(at: tapLocation)
-//        let cell = self.tableView.cellForRow(at: indexPath!) as! TweetCell
-//        if cell.tweet.retweeted == true {
-//            cell.tweet.retweeted = false
-//            cell.retweetImageThing.image = #imageLiteral(resourceName: "retweet-icon")
-//        }
-//        else {
-//            cell.tweet.retweeted = true
-//            cell.retweetImageThing.image = #imageLiteral(resourceName: "retweet-icon-green")
-//        }
-//    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tweets.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
-//        let tapGestureFavorite = UITapGestureRecognizer(target: self, action: #selector(favoriteAction(tapGesture:)))
-//        let tapGestureRetweet = UITapGestureRecognizer(target: self, action: #selector(retweetAction(tapGesture:)))
         cell.tweet = tweets[indexPath.row]
-//        cell.favoriteImageThing.isUserInteractionEnabled = true
-//        cell.favoriteImageThing.addGestureRecognizer(tapGestureRetweet)
-//        cell.favoriteImageThing.addGestureRecognizer(tapGestureFavorite) // Increment favorited when image is clicked
         return cell
     }
     

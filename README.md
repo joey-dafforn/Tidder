@@ -3,7 +3,7 @@
 
 **Tidder** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **X** hours spent in total
+Time spent: **5** hours spent in total
 
 ## User Stories
 
@@ -23,13 +23,13 @@ The following **stretch** features are implemented:
 - [X] The current signed in user will be persisted across restarts
 - [X] Each tweet should display the relative timestamp for each tweet "8m", "7h"
 - [X] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
-- [ ] Links in tweets are clickable.
+- [X] Links in tweets are clickable.
 - [ ] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
-
+- [X] Timestamp is the same as twitter- shown in min/hours. EX: 5m instead of 01/02/2018
+- [X] Mentions, hashtags and links are highlighted in blue (links are also clickable)
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
 1.

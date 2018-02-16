@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 protocol ComposeViewControllerDelegate {
     func did(post: Tweet)
@@ -14,12 +15,22 @@ protocol ComposeViewControllerDelegate {
 
 class ComposeTweetViewController: UIViewController, UITextViewDelegate {
 
+    @IBOutlet weak var profilePictureImage: UIImageView!
+    @IBOutlet weak var handleLabel: UILabel!
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var characterCountLabel: UILabel!
     @IBOutlet weak var composeText: UITextView!
     var delegate: ComposeViewControllerDelegate?
-
+    var user: User?
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let user = user {
+            usernameLabel.text = user.name
+            handleLabel.text = "@\(user.screenName)"
+            profilePictureImage.af_setImage(withURL: URL(string: user.profileImageURL)!)
+            profilePictureImage.layer.cornerRadius = 16
+            profilePictureImage.clipsToBounds = true
+        }
         composeText.delegate = self
         composeText.text = "What's happening?"
         composeText.textColor = UIColor.lightGray

@@ -93,12 +93,6 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func didTapCompose(_ sender: Any) {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "ComposeTweetView") as! ComposeTweetViewController
-        self.present(newViewController, animated: true, completion: nil)
-    }
-    
     @IBAction func didTapLogout(_ sender: Any) {
         APIManager.shared.logout()
     }
@@ -115,6 +109,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         else if (segue.identifier == "composeTweetSegue") {
             let dest = segue.destination as! ComposeTweetViewController
             dest.delegate = self
+            dest.user = User.current
         }
     }
     

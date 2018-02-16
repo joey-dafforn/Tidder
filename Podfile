@@ -17,6 +17,7 @@ target 'twitter_alamofire_demo' do
   pod 'TTTAttributedLabel'
   pod 'ActiveLabel'
   pod 'UIScrollView-InfiniteScroll', '~> 1.0.0'
+  pod 'RSKPlaceholderTextView'
   
   target 'twitter_alamofire_demoTests' do
     inherit! :search_paths

@@ -9,7 +9,11 @@
 import UIKit
 import UIScrollView_InfiniteScroll
 
-class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UIScrollViewDelegate {
+class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UIScrollViewDelegate, ComposeViewControllerDelegate {
+    
+    func did(post: Tweet) {
+        // This function is here to conform to the delegate protocol
+    }
     
     var tweets: [Tweet] = []
     var isMoreDataLoading = false
@@ -19,6 +23,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableView.dataSource = self
         tableView.delegate = self
         refreshControl = UIRefreshControl()
@@ -88,9 +93,29 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func didTapCompose(_ sender: Any) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let newViewController = storyBoard.instantiateViewController(withIdentifier: "ComposeTweetView") as! ComposeTweetViewController
+        self.present(newViewController, animated: true, completion: nil)
+    }
     
     @IBAction func didTapLogout(_ sender: Any) {
         APIManager.shared.logout()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "tweetDetailViewSegue") {
+            let cell = sender as! UITableViewCell
+            if let indexPath = tableView.indexPath(for: cell) {
+                let tweet = tweets[indexPath.row]
+                let tweetDetailViewController = segue.destination as! TweetDetailViewController
+                tweetDetailViewController.tweet = tweet
+            }
+        }
+        else if (segue.identifier == "composeTweetSegue") {
+            let dest = segue.destination as! ComposeTweetViewController
+            dest.delegate = self
+        }
     }
     
     

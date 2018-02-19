@@ -28,7 +28,7 @@ class TweetDetailViewController: UIViewController {
         super.viewDidLoad()
         if let tweet = tweet {
             usernameLabel.text = tweet.user.name
-            handleLabel.text = "@\(tweet.user.screenName)"
+            handleLabel.text = "@\(tweet.user.screenName!)"
             timeLabel.text = tweet.createdAtString
             tweetTextField.text = tweet.text
             tweetTextField.resolveHashTags()

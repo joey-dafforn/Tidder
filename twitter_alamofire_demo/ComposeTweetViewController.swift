@@ -26,7 +26,7 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         if let user = user {
             usernameLabel.text = user.name
-            handleLabel.text = "@\(user.screenName)"
+            handleLabel.text = "@\(user.screenName!)"
             profilePictureImage.af_setImage(withURL: URL(string: user.profileImageURL)!)
             profilePictureImage.layer.cornerRadius = 16
             profilePictureImage.clipsToBounds = true

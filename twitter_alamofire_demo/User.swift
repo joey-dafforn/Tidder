@@ -10,10 +10,14 @@ import Foundation
 
 class User {
     
-    var name: String
-    var screenName: String
+    var name: String!
+    var screenName: String!
     var dictionary: [String: Any]?
-    var profileImageURL: String
+    var profileImageURL: String!
+    var description: String!
+    var followerCount: Int!
+    var followingCount: Int!
+    var numTweets: Int!
     private static var _current: User?
 
     init(dictionary: [String: Any]) {
@@ -21,6 +25,10 @@ class User {
         name = dictionary["name"] as! String
         screenName = dictionary["screen_name"] as! String
         profileImageURL = dictionary["profile_image_url"] as! String
+        description = dictionary["description"] as! String
+        followerCount = dictionary["followers_count"] as! Int
+        followingCount = dictionary["friends_count"] as! Int
+        numTweets = dictionary["statuses_count"] as! Int
     }
     
     static var current: User? {

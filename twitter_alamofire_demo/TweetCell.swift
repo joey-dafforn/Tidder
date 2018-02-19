@@ -27,7 +27,7 @@ class TweetCell: UITableViewCell, UITextViewDelegate {
             tweetTextLabel.text = tweet.text
             tweetTextLabel.resolveHashTags()
             usernameLabel.text = tweet.user.name
-            twitterHandleLabel.text = "@\(tweet.user.screenName)"
+            twitterHandleLabel.text = "@\(tweet.user.screenName!)"
             dateLabel.text = tweet.createdAtString
             retweetCountLabel.text = "\(String(tweet.retweetCount))"
             favoriteCountLabel.text = "\(String(describing: tweet.favoriteCount!))"
